@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:context="http://www.springframework.org/schema/context" 
+      xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+      
+      <!-- 컴포넌트 스캔 -->
+      <context:component-scan base-package="test03"/>
+      <!-- 자동 주입 : Autowired 테스트 -->
+      <context:annotation-config/> <!-- 어노테이션을 이용할 설정 허용! -->
+      
+       <!-- qualifier 테스트 -->
+      	<bean id ="chef" class="test03.auto.Chef">
+      	  	<qualifier value="c1"></qualifier>  
+      	</bean>
+      	
+      	<bean id="chef2" class="test03.auto.Chef">
+      		<qualifier  value="c2" ></qualifier>
+      	</bean>
+ 		<bean id="chef3" class="test02.construct.Chef"/>
+ 		
+ 		<!-- setter를 이용한 설정 -->
+ 		<bean id="memTest" class="test03.auto.Memtest">
+ 			<property name="url" value="jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Seoul"/>
+ 			<property name="uid" value="mytest"/>
+ 			<property name="upw" value="mytest"/>
+ 			<qualifier value="t1"></qualifier>
+ 		</bean>
+      
+      <bean id="memTest2" class="test03.auto.Memtest">
+ 			<property name="url" value="jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Seoul"/>
+ 			<property name="uid" value="mytest2"/>
+ 			<property name="upw" value="mytest2"/>
+ 			<qualifier value="t2"/>
+ 		</bean>
+ 		
+      <!-- 
+      	xmlns : 속성 값은 네임스페이스로 태그를 식별하기  위한 이름 
+      	xmlns:xsi : XML 정보를 가리키는 주소 
+      	xsi:schemaLocation = {네임 스페이스 -xmlns} {참조할 값의 location }    
+       -->
+       
+       <!-- test02 : DI 방법  -->
+      
+ 		     	
+      	<!-- 생성자 주입  -->
+      	 <!--  <bean id ="hotel" class="test02.construct.Hotel">
+      		<constructor-arg ref="chef"/>
+      	</bean>   -->
+
+      <!-- 생성자 주입 -->
+       <bean id ="DBdev" class="test02.setter.DataBaseDev">
+      		<property name="url" value="jdbc:mysql://localhost:3306/test"/>
+      		<property name="uid" value="mytest"/>
+      		<property name="upw" value="mytest"/>
+      </bean> 
+      
+      <!-- 프로토타입 테스트 -->
+      <bean id="test" class="test01.SpringTest" scope="prototype"/>
+      
+</beans>
